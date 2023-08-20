@@ -1,11 +1,11 @@
 import {Dimensions, StyleSheet} from "react-native";
-import {color_beige_light} from "./colors";
+import {color_beige_light, color_blue_dark, color_blue_light, color_blue_light_less_opacity} from "./colors";
 
 export const settings_styles = StyleSheet.create({
     background: {
         margin : 0,
         padding : 0,
-        backgroundColor : color_beige_light,
+        backgroundColor : color_blue_light_less_opacity,
         width : Dimensions.get("window").width,
         height : Dimensions.get("window").height + 50
     },
