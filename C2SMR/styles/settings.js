@@ -1,5 +1,11 @@
 import {Dimensions, StyleSheet} from "react-native";
-import {color_beige_light, color_blue_dark, color_blue_light, color_blue_light_less_opacity} from "./colors";
+import {
+    color_beige_light,
+    color_blue_dark,
+    color_blue_light,
+    color_blue_light_less_opacity,
+    color_white
+} from "./colors";
 
 export const settings_styles = StyleSheet.create({
     background: {
@@ -17,7 +23,31 @@ export const settings_styles = StyleSheet.create({
         flexDirection : "row"
     },
 
+    flex_container_column : {
+        justifyContent : "center",
+        alignItems : "center",
+        display : "flex",
+    },
+
     basic_font : {
         fontSize : 24
+    },
+
+    scroll_container : {
+        maxHeight : Dimensions.get("window").height,
+        width : Dimensions.get("window").width,
+    },
+
+    void_container_for_scroll_view : {
+        height : Dimensions.get("window").height * .2,
+        width : Dimensions.get("window").width
     }
 });
+
+
+export const chart_graph = {
+    backgroundColor: color_white,
+    backgroundGradientFrom: color_white,
+    backgroundGradientTo: color_white,
+    color: (opacity = 1) => `rgba(48, 162, 255, ${opacity})`,
+}

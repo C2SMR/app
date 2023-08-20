@@ -20,6 +20,15 @@ npm start
 
 ---
 
+
+### CODE
+
+#### Lib
+ - [react-native-chart-kit](https://www.npmjs.com/package/react-native-chart-kit)
+
+
+---
+
 ### DESIGN
 
 #### Color : 
