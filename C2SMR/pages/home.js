@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, ScrollView, Dimensions} from 'react-native';
+import {View, Text, ScrollView, Dimensions, Pressable} from 'react-native';
 import {chart_graph, settings_styles} from "../styles/settings";
 import {Alert_circle} from "../components/alert_circle";
 import {color_green, color_orange, color_red} from "../styles/colors";
@@ -11,6 +11,7 @@ import {Label} from "../components/label";
 import {
     LineChart
 } from "react-native-chart-kit";
+import {Icon_text_button} from "../components/icon_text_button";
 
 export class Home extends React.Component {
 
@@ -23,20 +24,20 @@ export class Home extends React.Component {
             number_green_alert: 0,
             number_person_detected_on_beach: 0,
             number_person_detection_on_sea: 0,
-            data_person_per_hour_on_beach: [0,0,0,0,0,0,0,0,0],
-            data_person_per_hour_on_sea: [0,0,0,0,0,0,0,0,0],
-            visibility_sea: [0,0,0,0,0,0,0,0,0]
+            data_person_per_hour_on_beach: [20,10,2,10,40,10,20,1,0],
+            data_person_per_hour_on_sea: [10,2,2,1,6,20,10,1,0],
+            visibility_sea: [40,60,30,100,80,20,10,0,30]
         };
 
         this.data_person_per_hour = {
             labels: ["-8","-7","-6","-5","-4","-3","-2","-1","mtn"],
             datasets: [
                 {
-                    data: this.state.data_person_per_hour_on_beach,
+                    data: this.state.data_person_per_hour_on_sea,
                     strokeWidth: 2
                 },
                 {
-                    data: this.state.data_person_per_hour_on_sea,
+                    data: this.state.data_person_per_hour_on_beach,
                     color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`, // optional
                     strokeWidth: 2
                 }
@@ -121,6 +122,10 @@ export class Home extends React.Component {
 
 
                     {/*MAP ACCESS*/}
+                    <Icon_text_button text={"Accès Carte"} icon={"map"} color={color_green} action={()=> {
+                        this.state.set_page_name("map")
+                    }}/>
+
 
                     <View style={settings_styles.void_container_for_scroll_view}></View>
                 </ScrollView>

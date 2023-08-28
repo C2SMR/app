@@ -29,6 +29,13 @@ export const settings_styles = StyleSheet.create({
         display : "flex",
     },
 
+    flex_container_center : {
+        justifyContent : "center",
+        alignItems : "center",
+        display : "flex",
+        flexDirection : "row"
+    },
+
     basic_font : {
         fontSize : 24
     },
