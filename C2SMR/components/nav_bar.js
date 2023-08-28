@@ -1,5 +1,5 @@
 import React from "react";
-import {View} from 'react-native';
+import {Pressable, View} from 'react-native';
 import {container_styles} from "../styles/container";
 import {
     color_black,
@@ -10,8 +10,11 @@ import {settings_styles} from "../styles/settings";
 
 export class Nav_bar extends React.Component {
 
-    constructor({props, number_page}) {
+    constructor({props, number_page, set_name}) {
         super(props);
+        this.state = {
+            set_name : set_name
+        }
         this.number_page = number_page
         this.lst_home_icon = [
             "home",
@@ -27,7 +30,15 @@ export class Nav_bar extends React.Component {
             <View style={[container_styles.nav_bar,settings_styles.flex_container]}>
                 {
                     this.lst_home_icon.map((a,i) =>
-                        <Ionicons key={"icon-"+i.toString()} name={a} size={20} color={(i === this.number_page) ? color_blue_dark_dark : color_black}/>
+                        <Pressable
+                            key={"press-icon-"+i.toString()}
+                            onPress={() => {
+                            this.state.set_name(a);
+                        }}>
+                            <Ionicons
+                                key={"icon-"+i.toString()} name={a} size={20}
+                                color={(i === this.number_page) ? color_blue_dark_dark : color_black}/>
+                        </Pressable>
                     )
                 }
             </View>

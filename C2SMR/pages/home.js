@@ -14,9 +14,10 @@ import {
 
 export class Home extends React.Component {
 
-    constructor(props) {
+    constructor({props, set_name}) {
         super(props);
         this.state = {
+            set_page_name : set_name,
             number_red_alert: 0,
             number_orange_alert: 0,
             number_green_alert: 0,
@@ -124,7 +125,7 @@ export class Home extends React.Component {
                     <View style={settings_styles.void_container_for_scroll_view}></View>
                 </ScrollView>
 
-                <Nav_bar number_page={0}/>
+                <Nav_bar number_page={0} set_name={this.state.set_page_name}/>
             </View>
         );
     }
