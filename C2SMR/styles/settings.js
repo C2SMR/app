@@ -1,8 +1,5 @@
 import {Dimensions, StyleSheet} from "react-native";
 import {
-    color_beige_light,
-    color_blue_dark,
-    color_blue_light,
     color_blue_light_less_opacity,
     color_white
 } from "./colors";

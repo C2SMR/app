@@ -4,7 +4,7 @@ import Checkbox from 'expo-checkbox';
 import {settings_styles} from "../styles/settings";
 import {container_styles} from "../styles/container";
 import {text_styles} from "../styles/text";
-import {color_beige_light, color_blue_dark} from "../styles/colors";
+import {color_blue_dark} from "../styles/colors";
 
 export class Configuration extends React.Component {
     constructor({props,value,text}) {

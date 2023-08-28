@@ -3,7 +3,7 @@ import {ScrollView, View} from "react-native";
 import {Nav_bar} from "../components/nav_bar";
 import {settings_styles} from "../styles/settings";
 
-import {color_beige_light, color_blue_dark, color_green, color_red} from "../styles/colors";
+import {color_blue_dark, color_red} from "../styles/colors";
 import * as Linking from 'expo-linking';
 import {Icon_text_button} from "../components/icon_text_button";
 import {Label} from "../components/label";

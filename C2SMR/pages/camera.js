@@ -1,7 +1,7 @@
 import React from "react";
 import {Pressable, View, Image} from "react-native";
 import {Nav_bar} from "../components/nav_bar";
-import {color_black, color_red, color_white} from "../styles/colors";
+import {color_black} from "../styles/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import {settings_styles} from "../styles/settings";
 import {container_styles} from "../styles/container";

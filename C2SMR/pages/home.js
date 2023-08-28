@@ -1,5 +1,5 @@
 import React from "react";
-import {View, Text, ScrollView, Dimensions, Pressable} from 'react-native';
+import {View, Text, ScrollView, Dimensions} from 'react-native';
 import {chart_graph, settings_styles} from "../styles/settings";
 import {Alert_circle} from "../components/alert_circle";
 import {color_green, color_orange, color_red} from "../styles/colors";
