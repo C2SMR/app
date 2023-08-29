@@ -44,6 +44,7 @@ export const container_styles = StyleSheet.create({
         marginLeft : Dimensions.get("window").width * .05,
         height : 400,
         marginTop : 75,
+        marginBottom : 30
     },
 
     btn : {
