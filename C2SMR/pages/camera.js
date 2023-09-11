@@ -6,15 +6,18 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {settings_styles} from "../styles/settings";
 import {container_styles} from "../styles/container";
 import {images_styles} from "../styles/image";
+import {live_picture_path, url_api} from "../modules/env";
+import {getData} from "../modules/data";
 
 export class Camera extends React.Component {
     constructor({props, set_name}) {
         super(props);
         this.state = {
             set_page_name: set_name,
-            path_picture: "https://inspiranium.fr/cdn/54.png"
+            path_picture: live_picture_path + getData("city")
         }
     }
+
 
     render() {
         return(

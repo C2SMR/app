@@ -9,6 +9,8 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import {Label} from "../components/label";
 import {images_styles} from "../styles/image";
 import * as Linking from "expo-linking";
+import {url_api} from "../modules/env";
+import {getData} from "../modules/data";
 
 
 export class Alert extends React.Component {
@@ -19,19 +21,24 @@ export class Alert extends React.Component {
             num_image_to_display : 0,
             value_of_pop_up : new Animated.ValueXY({x : Dimensions.get('window').width * .05,y : -1000}),
             lst_alert: [
-                ["red","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["red","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/50.png"],
-                ["red","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["red","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["orange","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["orange","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["green","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["green","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["green","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["green","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"],
-                ["green","Neglegentur theophrastus neglegentur molestie euripidis invidunt.","https://inspiranium.fr/cdn/54.png"]
             ]
         };
+        this.fetch_alert();
+    }
+
+    fetch_alert() {
+        fetch(url_api + '/get_data_alert',{
+            method : "POST",
+            body : JSON.stringify({
+                city : getData("city")
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+                this.setState({
+                    lst_alert : r["data"]
+                });
+            });
     }
 
 

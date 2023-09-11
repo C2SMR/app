@@ -8,6 +8,7 @@ import {color_blue_dark} from "../styles/colors";
 import * as Linking from "expo-linking";
 import {Icon_text_button} from "../components/icon_text_button";
 import {storeData} from "../modules/data";
+import {url_api} from "../modules/env";
 
 export class Connect extends React.Component {
     constructor({props, set_name}) {
@@ -18,6 +19,29 @@ export class Connect extends React.Component {
             email : "",
             password :""
         }
+    }
+
+    test_connection() {
+        fetch(url_api + '/connect',{
+            method : "POST",
+            body: JSON.stringify({
+                email: this.state.email,
+                password: this.state.password
+            })
+        })
+            .then(r => r.json())
+            .then(async r => {
+                if (r["response"] === true) {
+                    await storeData("city",this.state.email);
+                    this.set_name = "home";
+                }
+                else {
+                    this.setState({
+                        email: '',
+                        password: ''
+                    });
+                }
+            });
     }
 
     not_visible_password() {
@@ -66,12 +90,7 @@ export class Connect extends React.Component {
                     <Pressable
                         style={[settings_styles.flex_container,container_styles.connect_btn]}
                         onPress={()=> {
-                            storeData("password-c2smr", this.state.password).then();
-                            storeData("email-c2smr-", this.state.email).then(()=> {
-                                setTimeout(()=>{
-                                    this.set_name("home");
-                                },200)
-                            });
+                            this.test_connection()
                         }}>
                         <Text style={[settings_styles.basic_font,text_styles.connect_text]}>Se connecter</Text>
                     </Pressable>

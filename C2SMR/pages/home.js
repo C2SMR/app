@@ -12,6 +12,8 @@ import {
     LineChart
 } from "react-native-chart-kit";
 import {Icon_text_button} from "../components/icon_text_button";
+import {url_api} from "../modules/env";
+import {getData} from "../modules/data";
 
 export class Home extends React.Component {
 
@@ -19,6 +21,7 @@ export class Home extends React.Component {
         super(props);
         this.state = {
             set_page_name : set_name,
+            color_flag : "green",
             number_red_alert: 0,
             number_orange_alert: 0,
             number_green_alert: 0,
@@ -43,7 +46,7 @@ export class Home extends React.Component {
                 },
                 {
                     data: this.state.data_person_per_hour_on_beach,
-                    color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`, // optional
+                    color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`,
                     strokeWidth: 2
                 }
             ],
@@ -70,7 +73,7 @@ export class Home extends React.Component {
                 },
                 {
                     data: this.state.weather_temperature_beach,
-                    color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`, // optional
+                    color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`,
                     strokeWidth: 2
                 }
             ],
@@ -110,6 +113,81 @@ export class Home extends React.Component {
             legend: ["Visibilité (en mille)"]
         }
 
+        this.fetch_speed_data();
+        this.fetch_data_graph();
+
+    }
+
+    fetch_speed_data() {
+        // nb person
+        fetch(url_api + '/get_nb_person', {
+            method : "POST",
+            body : JSON.stringify({
+                city : getData("city")
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+                this.setState({
+                    number_person_detected_on_beach: r["beach"],
+                    number_person_detection_on_sea: r["sea"],
+                })
+            });
+        // nb alerts
+        fetch(url_api + '/get_nb_alert', {
+            method : "POST",
+            body : JSON.stringify({
+                city: getData("city")
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+                this.setState({
+                    number_red_alert: r["red"],
+                    number_orange_alert: r["orange"],
+                    number_green_alert: r["green"],
+                })
+            })
+        // flag
+        fetch(url_api + '/get_flag',{
+            method : "POST",
+            body : JSON.stringify({
+                city : getData("city")
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+                this.setState({
+                    color_flag : r["flag"] === 0
+                        ?
+                        color_green
+                        : r["flag"] === 1 ?
+                            color_orange
+                            : color_red
+                })
+            })
+    }
+
+    fetch_data_graph() {
+        fetch(url_api + '/get_data_list', {
+            method : "POST",
+            body : JSON.stringify({
+                city : getData("city")
+            })
+        })
+            .then(r => r.json())
+            .then(r => {
+                this.setState({
+                    data_person_per_hour_on_beach: r["data_person_per_hour_on_beach"],
+                    data_person_per_hour_on_sea: r["data_person_per_hour_on_sea"],
+                    visibility_sea: r["visibility_sea"],
+                    weather_temperature_sea : r["weather_temperature_sea"],
+                    weather_temperature_beach : r["weather_temperature_beach"],
+                    weather_swell : r["weather_swell"],
+                    weather_wind : r["weather_wind"],
+                    weather_visibility : r["weather_visibility"]
+                })
+            })
     }
 
     render() {
@@ -120,7 +198,7 @@ export class Home extends React.Component {
                     {/*FLAG AND NUMBER ALERT STEP*/}
                     <View style={settings_styles.flex_container}>
                         <View style={[container_styles.container_flag, settings_styles.flex_container]}>
-                            <Ionicons name="flag" size={40} color={color_green}/>
+                            <Ionicons name="flag" size={40} color={this.state.color_flag}/>
                         </View>
                         <View style={[settings_styles.flex_container, container_styles.container_circle_alert]}>
                             <Alert_circle color={color_red} number={this.state.number_red_alert}/>

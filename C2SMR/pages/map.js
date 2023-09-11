@@ -4,6 +4,8 @@ import {Nav_bar} from "../components/nav_bar";
 import MapView from 'react-native-maps';
 import {Marker} from 'react-native-maps';
 import {images_styles} from "../styles/image";
+import {url_api} from "../modules/env";
+import {getData} from "../modules/data";
 
 export class Map extends React.Component {
     constructor({props, set_name}) {
@@ -18,6 +20,39 @@ export class Map extends React.Component {
             },
             pointer_position : [[48.994119156081254,2.2246659661397366,"Franconville",20]]
         }
+        this.get_data();
+    }
+
+    get_data() {
+        // init position
+        fetch(url_api+'/get_init_position', {
+            method : "POST",
+            body: JSON.stringify({
+                city: getData("city"),
+            })
+        })
+            .then(r => r.json())
+            .then(r => this.setState({
+                init_position: {
+                    latitude: r["latitude"],
+                    longitude: r["longitude"],
+                    latitudeDelta : 0.0922,
+                    longitudeDelta: 0.0421,
+                }
+            }))
+        // all pointer position
+        fetch(url_api+'/get_all_position',{
+            method: "POST",
+            body: JSON.stringify({
+                city: getData("city"),
+            })
+        })
+            .then(r => r.json())
+            .then((r) => {
+                this.setState({
+                    pointer_position: r["data"]
+                })
+            })
     }
 
     render() {
