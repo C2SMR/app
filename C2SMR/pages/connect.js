@@ -17,7 +17,7 @@ export class Connect extends React.Component {
         this.url_picture = "https://inspiranium.fr/cdn/174.png";
         this.state = {
             email : "",
-            password :""
+            password :"",
         }
     }
 

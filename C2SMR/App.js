@@ -14,7 +14,7 @@ export default class App extends React.Component {
 
     constructor(props) {
         super(props);
-        const [fontsLoaded] = useFonts({
+        const [_] = useFonts({
             'my-font': require("./assets/font.otf"),
         });
         this.state = {
