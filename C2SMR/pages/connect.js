@@ -56,7 +56,7 @@ export class Connect extends React.Component {
         return(
             <View>
                 <Image
-                    style={images_styles.actual_picture}
+                    style={[images_styles.actual_picture,{opacity : .7}]}
                     source={{
                         uri: this.url_picture,
                     }}
@@ -64,10 +64,10 @@ export class Connect extends React.Component {
 
 
                 <View style={[settings_styles.flex_container,{width : Dimensions.get("window").width ,position : "absolute", top : Dimensions.get("window").height * .3}]}>
-                    <Text style={[settings_styles.basic_font,text_styles.title]}>WELCOME TO C2SMR</Text>
+                    <Text style={[settings_styles.basic_font,text_styles.title]}>Login</Text>
                 </View>
 
-                <View style={{position : "absolute", top : Dimensions.get("window").height * .9}}>
+                <View style={{position : "absolute", top : Dimensions.get("window").height * .8}}>
                         <Icon_text_button text={"Contact"} icon={"mail-outline"} color={color_blue_dark} action={()=>{
                             Linking.openURL('mailto:victordalet@protonmail.com').then(r => console.log(r))
                         }}/>

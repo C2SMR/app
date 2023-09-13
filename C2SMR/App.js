@@ -8,14 +8,18 @@ import {Settings} from "./pages/settings";
 import {Alert} from "./pages/alert";
 import {getData} from "./modules/data";
 import {Connect} from "./pages/connect";
+import {useFonts} from "expo-font";
 
 export default class App extends React.Component {
 
     constructor(props) {
         super(props);
+        const [fontsLoaded] = useFonts({
+            'my-font': require("./assets/font.otf"),
+        });
         this.state = {
             page_name : "connect",
-            is_connected : getData("email-c2smr-")
+            is_connected : getData("city")
         }
         this.setData = this.setData.bind(this);
 
@@ -24,7 +28,7 @@ export default class App extends React.Component {
     setData(data) {
         this.setState({
             page_name: data,
-            is_connected : getData("email-c2smr-")
+            is_connected : getData("city")
         });
     }
 

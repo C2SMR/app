@@ -28,9 +28,9 @@ export class Settings extends React.Component {
 
                         <Label text={"Type de notification : "}/>
                         <View style={{height : 50}}></View>
-                        <Configuration value={false} text={"Alertes de type rouge"}/>
-                        <Configuration value={false} text={"Alertes de type orange"}/>
-                        <Configuration value={false} text={"Alertes de type verte"}/>
+                        <Configuration value={false} text={"Alertes de type rouge"} level_notif={"red"}/>
+                        <Configuration value={false} text={"Alertes de type orange"} level_notif={"orange"}/>
+                        <Configuration value={false} text={"Alertes de type verte"} level_notif={"green"}/>
 
 
                         {/*END BUTTON */}

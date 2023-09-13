@@ -1,5 +1,5 @@
 import {Dimensions, StyleSheet} from "react-native";
-import {color_beige_light, color_blue_dark, color_blue_light, color_white} from "./colors";
+import {color_beige_light, color_blue_dark, color_white} from "./colors";
 
 export const container_styles = StyleSheet.create({
     container_circle_alert : {
@@ -25,7 +25,7 @@ export const container_styles = StyleSheet.create({
         height : Dimensions.get("window").height * .1,
         backgroundColor : color_white,
         position : "absolute",
-        top : Dimensions.get("window").height * .97,
+        top : Dimensions.get("window").height * .9,
         zIndex : 2,
         elevation : 10,
     },
@@ -103,14 +103,9 @@ export const container_styles = StyleSheet.create({
 
     connect_card: {
         position : "absolute",
-        top : Dimensions.get("window").height * .5,
-        width : Dimensions.get("window").width * .8,
-        marginLeft : Dimensions.get("window").width * .1,
-        height : 270,
-        backgroundColor : color_white,
-        zIndex : 2,
-        borderRadius : 20,
-        elevation : 5
+        top : Dimensions.get("window").height * .4,
+        width : Dimensions.get("window").width ,
+        height : 270
     },
 
     connect_btn: {
@@ -122,10 +117,7 @@ export const container_styles = StyleSheet.create({
 
     input : {
         backgroundColor : color_white,
-        borderColor  : color_blue_light,
-        borderStyle : "solid",
-        borderWidth : 3,
-        borderRadius : 5,
+        borderRadius : 20,
         width : '80%',
         height : 45,
         marginBottom : 20,

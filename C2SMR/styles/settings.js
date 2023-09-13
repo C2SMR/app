@@ -4,6 +4,7 @@ import {
     color_white
 } from "./colors";
 
+
 export const settings_styles = StyleSheet.create({
     background: {
         margin : 0,
@@ -34,7 +35,8 @@ export const settings_styles = StyleSheet.create({
     },
 
     basic_font : {
-        fontSize : 24
+        fontSize : 24,
+        fontFamily: 'my-font'
     },
 
     scroll_container : {

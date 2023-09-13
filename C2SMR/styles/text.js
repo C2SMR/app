@@ -24,8 +24,9 @@ export const text_styles = StyleSheet.create({
     },
 
     title : {
-        fontSize : 25,
-        fontWeight: 'bold'
+        fontSize : 40,
+        fontWeight: 'bold',
+        color : color_white
     },
 
     connect_text: {
