@@ -1,5 +1,15 @@
 {
   "expo": {
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./local/assets/notification-icon.png",
+          "iosDisplayInForeground": true,
+          "androidMode": "default"
+        }
+      ]
+    ],
     "name": "C2SMR",
     "slug": "C2SMR",
     "version": "1.0.0",
