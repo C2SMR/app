@@ -95,7 +95,7 @@ export class Connect extends React.Component {
             color={color_blue_dark}
             action={() => {
               Linking.openURL("mailto:victordalet@protonmail.com").then((r) =>
-                console.log(r)
+                console.log(r),
               );
             }}
           />

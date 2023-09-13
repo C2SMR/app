@@ -50,7 +50,7 @@ export class Settings extends React.Component {
               color={color_blue_dark}
               action={() => {
                 Linking.openURL("mailto:victordalet@protonmail.com").then((r) =>
-                  console.log(r)
+                  console.log(r),
                 );
               }}
             />
@@ -60,7 +60,7 @@ export class Settings extends React.Component {
               color={color_red}
               action={() => {
                 removeData("email-c2smr-").then(
-                  this.state.set_page_name("connect")
+                  this.state.set_page_name("connect"),
                 );
               }}
             />

@@ -42,7 +42,7 @@ export class Map extends React.Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           },
-        })
+        }),
       );
     // all pointer position
     fetch(url_api + "/get_all_position", {

@@ -39,7 +39,11 @@ export const Notification = () => {
               await push_notification(
                 "C2SMR",
                 a[1],
-                a[0] === 0 ? color_green : a[0] === 1 ? color_orange : color_red
+                a[0] === 0
+                        ? color_green
+                        : a[0] === 1
+                        ? color_orange
+                        : color_red
               );
             }
           }
@@ -55,4 +59,3 @@ export const Notification = () => {
       });
   }, 10000); // 10sec
 };
-

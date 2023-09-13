@@ -1,19 +1,6 @@
 on: [push, pull_request]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - name: Use Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-      - run: ls
-      - run: cd .\C2SMR\
-      - run: npm start
-
-
   prettier:
     runs-on: ubuntu-latest
 
