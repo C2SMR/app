@@ -13,9 +13,9 @@ export class Camera extends React.Component {
     constructor({props, set_name}) {
         super(props);
         this.state = {
-            set_page_name: set_name,
-            path_picture: live_picture_path + getData("city")
-        }
+          set_page_name: set_name,
+          path_picture: live_picture_path + getData("city"),
+        };
     }
 
 

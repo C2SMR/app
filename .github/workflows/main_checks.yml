@@ -9,7 +9,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18.x'
-      - run: cd c2smr/
+      - run: ls
+      - run: cd .\C2SMR\
       - run: npm start
 
 

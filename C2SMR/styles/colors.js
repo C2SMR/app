@@ -1,6 +1,6 @@
 export const color_blue_dark = "#30A2FF";
 export const color_blue_light = "#00C4FF";
-export const color_blue_dark_dark = "#4931d3"
+export const color_blue_dark_dark = "#4931d3";
 export const color_blue_light_less_opacity = "rgba(0,196,255,0.44)";
 export const color_beige_dark = "#FFE7A0";
 export const color_beige_light = "#FFF5B8";
