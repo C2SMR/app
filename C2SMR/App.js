@@ -8,14 +8,10 @@ import { Settings } from "./pages/settings";
 import { Alert } from "./pages/alert";
 import { getData } from "./modules/data";
 import { Connect } from "./pages/connect";
-import { useFonts } from "expo-font";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    const [_] = useFonts({
-      "my-font": require("./assets/font.otf"),
-    });
     this.state = {
       page_name: "connect",
       is_connected: getData("city"),
@@ -31,20 +27,15 @@ export default class App extends React.Component {
   }
 
   render() {
-    console.log(this.state);
     return (
       <View>
-        {this.state.page_name === "home" ||
-        this.state.page_name === "connect" ? (
-          !this.state.is_connected["_j"] &&
+        {
           this.state.page_name === "connect" ? (
             <Connect set_name={this.setData} />
           ) : (
             <Home set_name={this.setData} />
           )
-        ) : (
-          ""
-        )}
+        }
         {this.state.page_name === "alert" ? (
           <Alert set_name={this.setData} />
         ) : (

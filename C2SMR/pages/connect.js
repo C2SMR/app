@@ -1,148 +1,89 @@
 import React from "react";
-import {
-  Image,
-  View,
-  Text,
-  Dimensions,
-  TextInput,
-  Pressable,
-} from "react-native";
-import { images_styles } from "../styles/image";
+import { View, Text, ScrollView, Pressable, TextInput } from "react-native";
 import { text_styles } from "../styles/text";
 import { settings_styles } from "../styles/settings";
-import { container_styles } from "../styles/container";
-import { color_blue_dark } from "../styles/colors";
-import * as Linking from "expo-linking";
-import { Icon_text_button } from "../components/icon_text_button";
-import { storeData } from "../modules/data";
 import { url_api } from "../modules/env";
+import { container_styles } from "../styles/container";
+import { storeData } from "../modules/data";
 
 export class Connect extends React.Component {
   constructor({ props, set_name }) {
     super(props);
     this.set_name = set_name;
-    this.url_picture = "https://inspiranium.fr/cdn/174.png";
     this.state = {
-      email: "",
-      password: "",
+      cities: ["test", "test2", "test22", "test", "test"],
+      cities_filter: ["test", "test", "test", "test", "test"],
+      param: "",
     };
+    this.get_city()
   }
 
-  test_connection() {
-    fetch(url_api + "/connect", {
-      method: "POST",
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-      }),
-    })
-      .then((r) => r.json())
-      .then(async (r) => {
-        if (r["response"] === true) {
-          await storeData("city", this.state.email);
-          this.set_name = "home";
-        } else {
-          this.setState({
-            email: "",
-            password: "",
-          });
+  update_filter() {
+    setTimeout(() => {
+      const new_filter_list_temp = [];
+      this.state.cities.map((a) => {
+        if (a.split(this.state.param).length !== 1) {
+          new_filter_list_temp.push(a);
         }
       });
+      this.setState({
+        cities_filter: new_filter_list_temp,
+      });
+    }, 200);
   }
 
-  not_visible_password() {
-    let password_none = "";
-    for (let i = 0; i < this.state.password.length; i++) {
-      password_none += "*";
-    }
-    return password_none;
+  get_city() {
+    fetch(url_api + "/get_name")
+      .then((r) => r.json())
+      .then((r) => {
+        this.setState({
+          cities: r["name"],
+          cities_filter: r["name"],
+        });
+      });
   }
 
   render() {
     return (
       <View>
-        <Image
-          style={[images_styles.actual_picture, { opacity: 0.7 }]}
-          source={{
-            uri: this.url_picture,
-          }}
-        ></Image>
-
-        <View
-          style={[
-            settings_styles.flex_container,
-            {
-              width: Dimensions.get("window").width,
-              position: "absolute",
-              top: Dimensions.get("window").height * 0.3,
-            },
-          ]}
-        >
-          <Text style={[settings_styles.basic_font, text_styles.title]}>
-            Login
-          </Text>
-        </View>
-
-        <View
-          style={{
-            position: "absolute",
-            top: Dimensions.get("window").height * 0.8,
-          }}
-        >
-          <Icon_text_button
-            text={"Contact"}
-            icon={"mail-outline"}
-            color={color_blue_dark}
-            action={() => {
-              Linking.openURL("mailto:victordalet@protonmail.com").then((r) =>
-                console.log(r),
-              );
-            }}
-          />
-        </View>
-
-        <View
-          style={[
-            settings_styles.flex_container_column,
-            container_styles.connect_card,
-          ]}
-        >
-          <View style={[container_styles.input]}>
-            <TextInput
-              onChangeText={(letter) => {
-                this.setState({ email: letter });
-              }}
-              value={this.state.email}
-              keyboardType={"email"}
-              placeholder={"email"}
-            />
-          </View>
-          <View style={[container_styles.input]}>
-            <TextInput
-              onChangeText={(letter) => {
-                this.setState({ password: letter });
-              }}
-              value={this.not_visible_password()}
-              keyboardType={"visible-password"}
-              placeholder={"password"}
-            />
-          </View>
-          <View style={{ height: 20 }}></View>
-          <Pressable
-            style={[
-              settings_styles.flex_container,
-              container_styles.connect_btn,
-            ]}
-            onPress={() => {
-              this.test_connection();
-            }}
-          >
-            <Text
-              style={[settings_styles.basic_font, text_styles.connect_text]}
+        <View style={[settings_styles.background]}>
+          <ScrollView style={settings_styles.scroll_container}>
+            <View
+              style={[
+                settings_styles.flex_container,
+                { marginTop: 100, marginBottom: 100 },
+              ]}
             >
-              Se connecter
-            </Text>
-          </Pressable>
+              <Text style={[settings_styles.basic_font, text_styles.title]}>
+                Où êtes vous ?
+              </Text>
+            </View>
+            <View style={[container_styles.input]}>
+              <TextInput
+                onChangeText={(letter) => {
+                  this.setState({ param: letter });
+                  this.update_filter();
+                }}
+                value={this.state.param}
+                placeholder={"Ex: Etretat"}
+              />
+            </View>
+            {this.state.cities_filter.map((a) => (
+              <Pressable
+                onPress={async () => {
+                  await storeData("city", a);
+                  this.set_name("home");
+                }}
+                style={[
+                  settings_styles.flex_container,
+                  container_styles.choice_city,
+                ]}
+              >
+                <Text style={[settings_styles.basic_font]}>{a}</Text>
+              </Pressable>
+            ))}
+            <View style={settings_styles.void_container_for_scroll_view}></View>
+          </ScrollView>
         </View>
       </View>
     );

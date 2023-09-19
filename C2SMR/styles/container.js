@@ -1,5 +1,10 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { color_beige_light, color_blue_dark, color_white } from "./colors";
+import {
+  color_beige_light,
+  color_blue_dark,
+  color_dark_grey,
+  color_white,
+} from "./colors";
 
 export const container_styles = StyleSheet.create({
   container_circle_alert: {
@@ -23,7 +28,9 @@ export const container_styles = StyleSheet.create({
   nav_bar: {
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height * 0.1,
-    backgroundColor: color_white,
+    borderTopWidth: 1,
+    borderTopColor: color_white,
+    backgroundColor: color_dark_grey,
     position: "absolute",
     top: Dimensions.get("window").height * 0.9,
     zIndex: 2,
@@ -117,11 +124,22 @@ export const container_styles = StyleSheet.create({
   input: {
     backgroundColor: color_white,
     borderRadius: 20,
-    width: "80%",
+    width: Dimensions.get("window").width * 0.8,
     height: 45,
     marginBottom: 20,
     paddingLeft: 20,
+    marginLeft: Dimensions.get("window").width * 0.1,
     display: "flex",
     justifyContent: "center",
+  },
+
+  choice_city: {
+    backgroundColor: color_blue_dark,
+    borderRadius: 20,
+    width: Dimensions.get("window").width * 0.8,
+    marginLeft: Dimensions.get("window").width * 0.1,
+    height: 50,
+    elevation: 5,
+    marginTop: 20,
   },
 });

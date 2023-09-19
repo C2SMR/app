@@ -10,7 +10,7 @@ export const text_styles = StyleSheet.create({
 
   label_font_home_page: {
     fontSize: 24,
-    color: color_black,
+    color: color_white,
     fontWeight: "bold",
   },
 
