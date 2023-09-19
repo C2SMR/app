@@ -6,15 +6,15 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import { settings_styles } from "../styles/settings";
 import { container_styles } from "../styles/container";
 import { images_styles } from "../styles/image";
-import { live_picture_path, url_api } from "../modules/env";
-import { getData } from "../modules/data";
+import { live_picture_path } from "../modules/env";
 
 export class Camera extends React.Component {
-  constructor({ props, set_name }) {
+  constructor({ props, set_name, city }) {
     super(props);
+    this.city = city;
     this.state = {
       set_page_name: set_name,
-      path_picture: live_picture_path + getData("city"),
+      path_picture: live_picture_path + this.city,
     };
   }
 

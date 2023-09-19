@@ -4,18 +4,18 @@ import { text_styles } from "../styles/text";
 import { settings_styles } from "../styles/settings";
 import { url_api } from "../modules/env";
 import { container_styles } from "../styles/container";
-import { storeData } from "../modules/data";
 
 export class Connect extends React.Component {
-  constructor({ props, set_name }) {
+  constructor({ props, set_name, set_city }) {
     super(props);
     this.set_name = set_name;
+    this.set_city = set_city;
     this.state = {
       cities: ["test", "test2", "test22", "test", "test"],
       cities_filter: ["test", "test", "test", "test", "test"],
       param: "",
     };
-    this.get_city()
+    this.get_city();
   }
 
   update_filter() {
@@ -71,7 +71,7 @@ export class Connect extends React.Component {
             {this.state.cities_filter.map((a) => (
               <Pressable
                 onPress={async () => {
-                  await storeData("city", a);
+                  this.set_city(a);
                   this.set_name("home");
                 }}
                 style={[

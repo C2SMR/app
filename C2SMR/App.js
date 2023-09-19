@@ -15,8 +15,10 @@ export default class App extends React.Component {
     this.state = {
       page_name: "connect",
       is_connected: getData("city"),
+      city: "",
     };
     this.setData = this.setData.bind(this);
+    this.setCity = this.setCity.bind(this);
   }
 
   setData(data) {
@@ -26,29 +28,43 @@ export default class App extends React.Component {
     });
   }
 
+  setCity(city) {
+    this.setState({
+      city: city,
+    });
+  }
+
   render() {
+    console.log(this.state.page_name);
     return (
       <View>
-        {
-          this.state.page_name === "connect" ? (
-            <Connect set_name={this.setData} />
-          ) : (
-            <Home set_name={this.setData} />
-          )
-        }
+        {this.state.page_name === "connect" ? (
+          <Connect set_name={this.setData} set_city={this.setCity} />
+        ) : (
+          ""
+        )}
+        {this.state.page_name === "home" ? (
+          <Home set_name={this.setData} city={this.state.city} />
+        ) : (
+          ""
+        )}
         {this.state.page_name === "alert" ? (
-          <Alert set_name={this.setData} />
+          <Alert set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}
         {this.state.page_name === "camera" ? (
-          <Camera set_name={this.setData} />
+          <Camera set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}
-        {this.state.page_name === "map" ? <Map set_name={this.setData} /> : ""}
+        {this.state.page_name === "map" ? (
+          <Map set_name={this.setData} city={this.state.city} />
+        ) : (
+          ""
+        )}
         {this.state.page_name === "settings" ? (
-          <Settings set_name={this.setData} />
+          <Settings set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}

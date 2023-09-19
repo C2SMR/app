@@ -90,10 +90,10 @@ export const container_styles = StyleSheet.create({
     height: 50,
     borderRadius: 50,
     elevation: 1,
-    backgroundColor: color_beige_light,
+    backgroundColor: color_blue_dark,
     marginLeft: Dimensions.get("window").width * 0.5 - 25,
     position: "absolute",
-    top: Dimensions.get("window").height * 0.85,
+    top: Dimensions.get("window").height * 0.8,
     zIndex: 2,
   },
 

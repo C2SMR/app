@@ -11,11 +11,11 @@ import { Label } from "../components/label";
 import { LineChart } from "react-native-chart-kit";
 import { Icon_text_button } from "../components/icon_text_button";
 import { url_api } from "../modules/env";
-import { getData } from "../modules/data";
 
 export class Home extends React.Component {
-  constructor({ props, set_name }) {
+  constructor({ props, set_name, city }) {
     super(props);
+    this.city = city;
     this.state = {
       set_page_name: set_name,
       color_flag: "green",
@@ -24,14 +24,14 @@ export class Home extends React.Component {
       number_green_alert: 0,
       number_person_detected_on_beach: 0,
       number_person_detection_on_sea: 0,
-      data_person_per_hour_on_beach: [20, 10, 2, 10, 40, 10, 20, 1, 0],
-      data_person_per_hour_on_sea: [10, 2, 2, 1, 6, 20, 10, 1, 0],
-      visibility_sea: [40, 60, 30, 100, 80, 20, 10, 0, 30],
-      weather_temperature_sea: [10, 2, 2, 1, 6, 20, 10, 1, 0],
-      weather_temperature_beach: [40, 60, 30, 100, 80, 20, 10, 0, 30],
-      weather_swell: [0.3, 2, 2, 1, 6, 0.5, 2, 1, 0],
-      weather_wind: [30, 20, 20, 10, 60, 45, 20, 10, 40],
-      weather_visibility: [0.3, 0.2, 0.2, 0.1, 0.6, 0.45, 0.2, 0.1, 0.4],
+      data_person_per_hour_on_beach: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      data_person_per_hour_on_sea: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      visibility_sea: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      weather_temperature_sea: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      weather_temperature_beach: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      weather_swell: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      weather_wind: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      weather_visibility: [0, 0, 0, 0, 0, 0, 0, 0, 0],
     };
 
     this.data_person_per_hour = {
@@ -119,7 +119,7 @@ export class Home extends React.Component {
     fetch(url_api + "/get_nb_person", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())
@@ -133,7 +133,7 @@ export class Home extends React.Component {
     fetch(url_api + "/get_nb_alert", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())
@@ -148,7 +148,7 @@ export class Home extends React.Component {
     fetch(url_api + "/get_flag", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())
@@ -168,7 +168,7 @@ export class Home extends React.Component {
     fetch(url_api + "/get_data_list", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())
