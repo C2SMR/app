@@ -8,14 +8,15 @@ import * as Linking from "expo-linking";
 import { Icon_text_button } from "../components/icon_text_button";
 import { Label } from "../components/label";
 import { Configuration } from "../components/configuration";
-import { getData, removeData } from "../modules/data";
+import { removeData } from "../modules/data";
 
 export class Settings extends React.Component {
-  constructor({ props, set_name }) {
+  constructor({ props, set_name, city }) {
     super(props);
+    this.city = city;
     this.state = {
       set_page_name: set_name,
-      name_of_the_city: getData("city"),
+      name_of_the_city: this.city,
     };
   }
 

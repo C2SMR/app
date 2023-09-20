@@ -8,19 +8,17 @@ import { Settings } from "./pages/settings";
 import { Alert } from "./pages/alert";
 import { getData } from "./modules/data";
 import { Connect } from "./pages/connect";
-import { useFonts } from "expo-font";
 
 export default class App extends React.Component {
   constructor(props) {
     super(props);
-    const [_] = useFonts({
-      "my-font": require("./assets/font.otf"),
-    });
     this.state = {
       page_name: "connect",
       is_connected: getData("city"),
+      city: "",
     };
     this.setData = this.setData.bind(this);
+    this.setCity = this.setCity.bind(this);
   }
 
   setData(data) {
@@ -30,34 +28,43 @@ export default class App extends React.Component {
     });
   }
 
+  setCity(city) {
+    this.setState({
+      city: city,
+    });
+  }
+
   render() {
-    console.log(this.state);
+    console.log(this.state.page_name);
     return (
       <View>
-        {this.state.page_name === "home" ||
-        this.state.page_name === "connect" ? (
-          !this.state.is_connected["_j"] &&
-          this.state.page_name === "connect" ? (
-            <Connect set_name={this.setData} />
-          ) : (
-            <Home set_name={this.setData} />
-          )
+        {this.state.page_name === "connect" ? (
+          <Connect set_name={this.setData} set_city={this.setCity} />
+        ) : (
+          ""
+        )}
+        {this.state.page_name === "home" ? (
+          <Home set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}
         {this.state.page_name === "alert" ? (
-          <Alert set_name={this.setData} />
+          <Alert set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}
         {this.state.page_name === "camera" ? (
-          <Camera set_name={this.setData} />
+          <Camera set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}
-        {this.state.page_name === "map" ? <Map set_name={this.setData} /> : ""}
+        {this.state.page_name === "map" ? (
+          <Map set_name={this.setData} city={this.state.city} />
+        ) : (
+          ""
+        )}
         {this.state.page_name === "settings" ? (
-          <Settings set_name={this.setData} />
+          <Settings set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}

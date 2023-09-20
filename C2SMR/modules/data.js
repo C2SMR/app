@@ -20,7 +20,8 @@ export const removeData = async (key) => {
 export const getData = async (key) => {
   const value = await AsyncStorage.getItem(key);
   if (value !== null) {
-    return value;
+    console.log(value);
+    return value["_j"];
   }
   return false;
 };

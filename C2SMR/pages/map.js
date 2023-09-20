@@ -5,11 +5,11 @@ import MapView from "react-native-maps";
 import { Marker } from "react-native-maps";
 import { images_styles } from "../styles/image";
 import { url_api } from "../modules/env";
-import { getData } from "../modules/data";
 
 export class Map extends React.Component {
-  constructor({ props, set_name }) {
+  constructor({ props, set_name, city }) {
     super(props);
+    this.city = city;
     this.state = {
       set_page_name: set_name,
       init_position: {
@@ -19,7 +19,6 @@ export class Map extends React.Component {
         longitudeDelta: 0.0421,
       },
       pointer_position: [
-        [48.994119156081254, 2.2246659661397366, "Franconville", 20],
       ],
     };
     this.get_data();
@@ -30,7 +29,7 @@ export class Map extends React.Component {
     fetch(url_api + "/get_init_position", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())
@@ -42,13 +41,13 @@ export class Map extends React.Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           },
-        }),
+        })
       );
     // all pointer position
     fetch(url_api + "/get_all_position", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())

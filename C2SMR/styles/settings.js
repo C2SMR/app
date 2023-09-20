@@ -1,11 +1,11 @@
 import { Dimensions, StyleSheet } from "react-native";
-import { color_blue_light_less_opacity, color_white } from "./colors";
+import {color_dark_grey, color_white} from "./colors";
 
 export const settings_styles = StyleSheet.create({
   background: {
     margin: 0,
     padding: 0,
-    backgroundColor: color_blue_light_less_opacity,
+    backgroundColor: color_dark_grey,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height + 50,
   },
@@ -32,7 +32,6 @@ export const settings_styles = StyleSheet.create({
 
   basic_font: {
     fontSize: 24,
-    fontFamily: "my-font",
   },
 
   scroll_container: {
