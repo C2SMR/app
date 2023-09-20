@@ -4,7 +4,6 @@ import { text_styles } from "../styles/text";
 import { settings_styles } from "../styles/settings";
 import { url_api } from "../modules/env";
 import { container_styles } from "../styles/container";
-import {Image} from "react-native-web";
 
 export class Connect extends React.Component {
   constructor({ props, set_name, set_city }) {
