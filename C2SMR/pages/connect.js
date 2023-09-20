@@ -4,6 +4,7 @@ import { text_styles } from "../styles/text";
 import { settings_styles } from "../styles/settings";
 import { url_api } from "../modules/env";
 import { container_styles } from "../styles/container";
+import {Image} from "react-native-web";
 
 export class Connect extends React.Component {
   constructor({ props, set_name, set_city }) {
@@ -11,8 +12,8 @@ export class Connect extends React.Component {
     this.set_name = set_name;
     this.set_city = set_city;
     this.state = {
-      cities: ["test", "test2", "test22", "test", "test"],
-      cities_filter: ["test", "test", "test", "test", "test"],
+      cities: [],
+      cities_filter: [],
       param: "",
     };
     this.get_city();

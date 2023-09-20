@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, ScrollView, Dimensions } from "react-native";
+import {View, Text, ScrollView, Dimensions, Pressable} from "react-native";
 import { chart_graph, settings_styles } from "../styles/settings";
 import { Alert_circle } from "../components/alert_circle";
 import { color_green, color_orange, color_red } from "../styles/colors";
@@ -103,7 +103,7 @@ export class Home extends React.Component {
           visibility_sea: r["visibility_sea"],
           weather_temperature_sea: r["weather_temperature_beach"],
           weather_temperature_beach: r["weather_temperature_beach"],
-          weather_swell: r["weather_wind"],
+          weather_swell: r["cloud_cover"],
           weather_wind: r["weather_wind"],
           weather_visibility: r["weather_visibility"],
         });
@@ -124,7 +124,10 @@ export class Home extends React.Component {
             >
               <Ionicons name="flag" size={40} color={this.state.color_flag} />
             </View>
-            <View
+            <Pressable
+                onPress={()=> {
+                    this.state.set_page_name("alert");
+                }}
               style={[
                 settings_styles.flex_container,
                 container_styles.container_circle_alert,
@@ -154,7 +157,7 @@ export class Home extends React.Component {
               ) : (
                 ""
               )}
-            </View>
+            </Pressable>
           </View>
 
           {/*POPULATION DETECTION STEP*/}
@@ -292,7 +295,7 @@ export class Home extends React.Component {
                         strokeWidth: 2,
                       },
                     ],
-                    legend: ["Houle (en mètres)"],
+                    legend: ["Nuages en %"],
                   }}
                   width={Dimensions.get("window").width * 0.8}
                   height={Dimensions.get("window").height * 0.4}

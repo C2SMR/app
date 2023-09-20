@@ -127,9 +127,9 @@ export class Alert extends React.Component {
                   name="triangle-outline"
                   size={50}
                   color={
-                    a[0] === "red"
+                    a[0] === 2
                       ? color_red
-                      : a[0] === "orange"
+                      : a[0] === 1
                       ? color_orange
                       : color_green
                   }
