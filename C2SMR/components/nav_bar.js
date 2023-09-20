@@ -1,7 +1,7 @@
 import React from "react";
 import { Pressable, View } from "react-native";
 import { container_styles } from "../styles/container";
-import { color_black, color_blue_dark } from "../styles/colors";
+import { color_blue_dark, color_white } from "../styles/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { settings_styles } from "../styles/settings";
 
@@ -29,7 +29,7 @@ export class Nav_bar extends React.Component {
               key={"icon-" + i.toString()}
               name={a}
               size={20}
-              color={i === this.number_page ? color_blue_dark : color_black}
+              color={i === this.number_page ? color_blue_dark : color_white}
             />
           </Pressable>
         ))}

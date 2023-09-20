@@ -18,11 +18,11 @@ import { Label } from "../components/label";
 import { images_styles } from "../styles/image";
 import * as Linking from "expo-linking";
 import { url_api } from "../modules/env";
-import { getData } from "../modules/data";
 
 export class Alert extends React.Component {
-  constructor({ props, set_name }) {
+  constructor({ props, set_name, city }) {
     super(props);
+    this.city = city;
     this.state = {
       set_page_name: set_name,
       num_image_to_display: 0,
@@ -30,7 +30,7 @@ export class Alert extends React.Component {
         x: Dimensions.get("window").width * 0.05,
         y: -1000,
       }),
-      lst_alert: [],
+      lst_alert: [[]],
     };
     this.fetch_alert();
   }
@@ -39,7 +39,7 @@ export class Alert extends React.Component {
     fetch(url_api + "/get_data_alert", {
       method: "POST",
       body: JSON.stringify({
-        city: getData("city"),
+        city: this.city,
       }),
     })
       .then((r) => r.json())
@@ -113,8 +113,8 @@ export class Alert extends React.Component {
             <Pressable
               onPress={() => {
                 this.setState({ num_image_to_display: i });
-                this.moveForPopUp(false);
-                this.refs._scrollView.scrollTo(0);
+                // this.moveForPopUp(false);
+                // this.refs._scrollView.scrollTo(0);
               }}
               style={[
                 settings_styles.flex_container_center,
