@@ -11,6 +11,7 @@ import { Label } from "../components/label";
 import { LineChart } from "react-native-chart-kit";
 import { Icon_text_button } from "../components/icon_text_button";
 import { url_api } from "../modules/env";
+import {sentences} from "../modules/language";
 
 export class Home extends React.Component {
   constructor({ props, set_name, city }) {
@@ -161,7 +162,7 @@ export class Home extends React.Component {
           </View>
 
           {/*POPULATION DETECTION STEP*/}
-          <Label text={"Population détéctés : "} />
+          <Label text={sentences.fr.label_population} />
           <View style={settings_styles.flex_container}>
             <View
               style={[
@@ -172,7 +173,7 @@ export class Home extends React.Component {
               <Text style={settings_styles.basic_font}>
                 {this.state.number_person_detected_on_beach}
               </Text>
-              <Text style={text_styles.index_font_home_page}>Plage</Text>
+              <Text style={text_styles.index_font_home_page}>{sentences.fr.beach}</Text>
             </View>
             <View
               style={[
@@ -183,12 +184,12 @@ export class Home extends React.Component {
               <Text style={settings_styles.basic_font}>
                 {this.state.number_person_detection_on_sea}
               </Text>
-              <Text style={text_styles.index_font_home_page}>Mer</Text>
+              <Text style={text_styles.index_font_home_page}>{sentences.fr.sea}</Text>
             </View>
           </View>
 
           {/*POPULATION NUMBER BY TIME STEP*/}
-          <Label text={"Population détéctés dans le temps : "} />
+          <Label text={sentences.fr.label_population_time} />
           <View
             style={[settings_styles.flex_container, container_styles.graph]}
           >
@@ -217,7 +218,7 @@ export class Home extends React.Component {
                       strokeWidth: 2,
                     },
                   ],
-                  legend: ["Mer", "Plage"],
+                  legend: [sentences.fr.sea, sentences.fr.beach],
                 }}
                 width={Dimensions.get("window").width * 0.8}
                 height={Dimensions.get("window").height * 0.4}
@@ -230,7 +231,7 @@ export class Home extends React.Component {
           </View>
 
           {/*WEATHER REPORT STEP*/}
-          <Label text={"Rapports métérologique : "} />
+          <Label text={sentences.fr.label_report_step} />
           <ScrollView horizontal={true}>
             <View
               style={[settings_styles.flex_container, container_styles.graph]}
@@ -378,7 +379,7 @@ export class Home extends React.Component {
           </ScrollView>
 
           {/*VISION STEP*/}
-          <Label text={"Visibilité de la mer : "} />
+          <Label text={sentences.fr.label_sea_visibility} />
           <View
             style={[settings_styles.flex_container, container_styles.graph]}
           >
@@ -416,7 +417,7 @@ export class Home extends React.Component {
 
           {/*MAP ACCESS*/}
           <Icon_text_button
-            text={"Accès Carte"}
+            text={sentences.fr.go_to_map}
             icon={"map"}
             color={color_green}
             action={() => {

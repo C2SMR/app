@@ -4,6 +4,7 @@ import { text_styles } from "../styles/text";
 import { settings_styles } from "../styles/settings";
 import { url_api } from "../modules/env";
 import { container_styles } from "../styles/container";
+import {sentences} from "../modules/language";
 
 export class Connect extends React.Component {
   constructor({ props, set_name, set_city }) {
@@ -55,7 +56,7 @@ export class Connect extends React.Component {
               ]}
             >
               <Text style={[settings_styles.basic_font, text_styles.title]}>
-                Où êtes vous ?
+                  {sentences.fr.where_are_you}
               </Text>
             </View>
             <View style={[container_styles.input]}>

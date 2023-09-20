@@ -18,6 +18,7 @@ import { Label } from "../components/label";
 import { images_styles } from "../styles/image";
 import * as Linking from "expo-linking";
 import { url_api } from "../modules/env";
+import {sentences} from "../modules/language";
 
 export class Alert extends React.Component {
   constructor({ props, set_name, city }) {
@@ -108,7 +109,7 @@ export class Alert extends React.Component {
           </Animated.View>
 
           {/*ALERT LIST STEP*/}
-          <Label text={"Alertes détéctées : "} />
+          <Label text={sentences.fr.alert_title} />
           {this.state.lst_alert.map((a, i) => (
             <Pressable
               onPress={() => {
