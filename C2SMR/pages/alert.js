@@ -18,6 +18,7 @@ import { Label } from "../components/label";
 import { images_styles } from "../styles/image";
 import * as Linking from "expo-linking";
 import { url_api } from "../modules/env";
+import {sentences} from "../modules/language";
 
 export class Alert extends React.Component {
   constructor({ props, set_name, city }) {
@@ -108,7 +109,7 @@ export class Alert extends React.Component {
           </Animated.View>
 
           {/*ALERT LIST STEP*/}
-          <Label text={"Alertes détéctées : "} />
+          <Label text={sentences.fr.alert_title} />
           {this.state.lst_alert.map((a, i) => (
             <Pressable
               onPress={() => {
@@ -127,9 +128,9 @@ export class Alert extends React.Component {
                   name="triangle-outline"
                   size={50}
                   color={
-                    a[0] === "red"
+                    a[0] === 2
                       ? color_red
-                      : a[0] === "orange"
+                      : a[0] === 1
                       ? color_orange
                       : color_green
                   }
