@@ -19,12 +19,12 @@ export class Home extends React.Component {
     this.state = {
       set_page_name: set_name,
       color_flag: "green",
-      number_red_alert: 0,
-      number_orange_alert: 0,
-      number_green_alert: 0,
+      number_red_alert: "",
+      number_orange_alert: "",
+      number_green_alert: "",
       number_person_detected_on_beach: 0,
       number_person_detection_on_sea: 0,
-      data_person_per_hour_on_beach: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      data_person_per_hour_on_beach: [],
       data_person_per_hour_on_sea: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       visibility_sea: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       weather_temperature_sea: [0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -32,82 +32,6 @@ export class Home extends React.Component {
       weather_swell: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       weather_wind: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       weather_visibility: [0, 0, 0, 0, 0, 0, 0, 0, 0],
-    };
-
-    this.data_person_per_hour = {
-      labels: ["-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "mtn"],
-      datasets: [
-        {
-          data: this.state.data_person_per_hour_on_sea,
-          strokeWidth: 2,
-        },
-        {
-          data: this.state.data_person_per_hour_on_beach,
-          color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`,
-          strokeWidth: 2,
-        },
-      ],
-      legend: ["Mer", "Plage"],
-    };
-
-    this.data_visibility_sea = {
-      labels: ["-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "mtn"],
-      datasets: [
-        {
-          data: this.state.visibility_sea,
-          strokeWidth: 2,
-        },
-      ],
-      legend: ["en %"],
-    };
-
-    this.data_weather_temperature = {
-      labels: ["-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "mtn"],
-      datasets: [
-        {
-          data: this.state.weather_temperature_sea,
-          strokeWidth: 2,
-        },
-        {
-          data: this.state.weather_temperature_beach,
-          color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`,
-          strokeWidth: 2,
-        },
-      ],
-      legend: ["°C eau", " °C air"],
-    };
-
-    this.data_weather_swell = {
-      labels: ["-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "mtn"],
-      datasets: [
-        {
-          data: this.state.weather_swell,
-          strokeWidth: 2,
-        },
-      ],
-      legend: ["Houle (en mètres)"],
-    };
-
-    this.data_weather_wind = {
-      labels: ["-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "mtn"],
-      datasets: [
-        {
-          data: this.state.weather_wind,
-          strokeWidth: 2,
-        },
-      ],
-      legend: ["Vent (en nœuds)"],
-    };
-
-    this.data_weather_visibility = {
-      labels: ["-8", "-7", "-6", "-5", "-4", "-3", "-2", "-1", "mtn"],
-      datasets: [
-        {
-          data: this.state.weather_visibility,
-          strokeWidth: 2,
-        },
-      ],
-      legend: ["Visibilité (en mille)"],
     };
 
     this.fetch_speed_data();
@@ -177,9 +101,9 @@ export class Home extends React.Component {
           data_person_per_hour_on_beach: r["data_person_per_hour_on_beach"],
           data_person_per_hour_on_sea: r["data_person_per_hour_on_sea"],
           visibility_sea: r["visibility_sea"],
-          weather_temperature_sea: r["weather_temperature_sea"],
+          weather_temperature_sea: r["weather_temperature_beach"],
           weather_temperature_beach: r["weather_temperature_beach"],
-          weather_swell: r["weather_swell"],
+          weather_swell: r["weather_wind"],
           weather_wind: r["weather_wind"],
           weather_visibility: r["weather_visibility"],
         });
@@ -206,18 +130,30 @@ export class Home extends React.Component {
                 container_styles.container_circle_alert,
               ]}
             >
-              <Alert_circle
-                color={color_red}
-                number={this.state.number_red_alert}
-              />
-              <Alert_circle
-                color={color_orange}
-                number={this.state.number_orange_alert}
-              />
-              <Alert_circle
-                color={color_green}
-                number={this.state.number_green_alert}
-              />
+              {this.state.number_red_alert !== "" ? (
+                <Alert_circle
+                  color={color_red}
+                  number={this.state.number_red_alert}
+                />
+              ) : (
+                ""
+              )}
+              {this.state.number_orange_alert !== "" ? (
+                <Alert_circle
+                  color={color_orange}
+                  number={this.state.number_orange_alert}
+                />
+              ) : (
+                ""
+              )}
+              {this.state.number_red_alert !== "" ? (
+                <Alert_circle
+                  color={color_green}
+                  number={this.state.number_green_alert}
+                />
+              ) : (
+                ""
+              )}
             </View>
           </View>
 
@@ -253,13 +189,41 @@ export class Home extends React.Component {
           <View
             style={[settings_styles.flex_container, container_styles.graph]}
           >
-            <LineChart
-              data={this.data_person_per_hour}
-              width={Dimensions.get("window").width * 0.8}
-              height={Dimensions.get("window").height * 0.4}
-              chartConfig={chart_graph}
-              bezier
-            />
+            {this.state.data_person_per_hour_on_beach.length !== 0 ? (
+              <LineChart
+                data={{
+                  labels: [
+                    "-8",
+                    "-7",
+                    "-6",
+                    "-5",
+                    "-4",
+                    "-3",
+                    "-2",
+                    "-1",
+                    "mtn",
+                  ],
+                  datasets: [
+                    {
+                      data: this.state.data_person_per_hour_on_sea,
+                      strokeWidth: 2,
+                    },
+                    {
+                      data: this.state.data_person_per_hour_on_beach,
+                      color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`,
+                      strokeWidth: 2,
+                    },
+                  ],
+                  legend: ["Mer", "Plage"],
+                }}
+                width={Dimensions.get("window").width * 0.8}
+                height={Dimensions.get("window").height * 0.4}
+                chartConfig={chart_graph}
+                bezier
+              />
+            ) : (
+              ""
+            )}
           </View>
 
           {/*WEATHER REPORT STEP*/}
@@ -268,46 +232,144 @@ export class Home extends React.Component {
             <View
               style={[settings_styles.flex_container, container_styles.graph]}
             >
-              <LineChart
-                data={this.data_weather_temperature}
-                width={Dimensions.get("window").width * 0.8}
-                height={Dimensions.get("window").height * 0.4}
-                chartConfig={chart_graph}
-                bezier
-              />
+              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
+                <LineChart
+                  data={{
+                    labels: [
+                      "-8",
+                      "-7",
+                      "-6",
+                      "-5",
+                      "-4",
+                      "-3",
+                      "-2",
+                      "-1",
+                      "mtn",
+                    ],
+                    datasets: [
+                      {
+                        data: this.state.weather_temperature_sea,
+                        strokeWidth: 2,
+                      },
+                      {
+                        data: this.state.weather_temperature_beach,
+                        color: (opacity = 1) =>
+                          `rgba(255, 231, 160, ${opacity})`,
+                        strokeWidth: 2,
+                      },
+                    ],
+                    legend: ["°C eau", " °C air"],
+                  }}
+                  width={Dimensions.get("window").width * 0.8}
+                  height={Dimensions.get("window").height * 0.4}
+                  chartConfig={chart_graph}
+                  bezier
+                />
+              ) : (
+                ""
+              )}
             </View>
             <View
               style={[settings_styles.flex_container, container_styles.graph]}
             >
-              <LineChart
-                data={this.data_weather_swell}
-                width={Dimensions.get("window").width * 0.8}
-                height={Dimensions.get("window").height * 0.4}
-                chartConfig={chart_graph}
-                bezier
-              />
+              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
+                <LineChart
+                  data={{
+                    labels: [
+                      "-8",
+                      "-7",
+                      "-6",
+                      "-5",
+                      "-4",
+                      "-3",
+                      "-2",
+                      "-1",
+                      "mtn",
+                    ],
+                    datasets: [
+                      {
+                        data: this.state.weather_swell,
+                        strokeWidth: 2,
+                      },
+                    ],
+                    legend: ["Houle (en mètres)"],
+                  }}
+                  width={Dimensions.get("window").width * 0.8}
+                  height={Dimensions.get("window").height * 0.4}
+                  chartConfig={chart_graph}
+                  bezier
+                />
+              ) : (
+                ""
+              )}
             </View>
             <View
               style={[settings_styles.flex_container, container_styles.graph]}
             >
-              <LineChart
-                data={this.data_weather_wind}
-                width={Dimensions.get("window").width * 0.8}
-                height={Dimensions.get("window").height * 0.4}
-                chartConfig={chart_graph}
-                bezier
-              />
+              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
+                <LineChart
+                  data={{
+                    labels: [
+                      "-8",
+                      "-7",
+                      "-6",
+                      "-5",
+                      "-4",
+                      "-3",
+                      "-2",
+                      "-1",
+                      "mtn",
+                    ],
+                    datasets: [
+                      {
+                        data: this.state.weather_wind,
+                        strokeWidth: 2,
+                      },
+                    ],
+                    legend: ["Vent (en nœuds)"],
+                  }}
+                  width={Dimensions.get("window").width * 0.8}
+                  height={Dimensions.get("window").height * 0.4}
+                  chartConfig={chart_graph}
+                  bezier
+                />
+              ) : (
+                ""
+              )}
             </View>
             <View
               style={[settings_styles.flex_container, container_styles.graph]}
             >
-              <LineChart
-                data={this.data_weather_visibility}
-                width={Dimensions.get("window").width * 0.8}
-                height={Dimensions.get("window").height * 0.4}
-                chartConfig={chart_graph}
-                bezier
-              />
+              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
+                <LineChart
+                  data={{
+                    labels: [
+                      "-8",
+                      "-7",
+                      "-6",
+                      "-5",
+                      "-4",
+                      "-3",
+                      "-2",
+                      "-1",
+                      "mtn",
+                    ],
+                    datasets: [
+                      {
+                        data: this.state.weather_visibility,
+                        strokeWidth: 2,
+                      },
+                    ],
+                    legend: ["Visibilité (en mille)"],
+                  }}
+                  width={Dimensions.get("window").width * 0.8}
+                  height={Dimensions.get("window").height * 0.4}
+                  chartConfig={chart_graph}
+                  bezier
+                />
+              ) : (
+                ""
+              )}
             </View>
             <View style={{ width: 50 }}></View>
           </ScrollView>
@@ -317,13 +379,36 @@ export class Home extends React.Component {
           <View
             style={[settings_styles.flex_container, container_styles.graph]}
           >
-            <LineChart
-              data={this.data_visibility_sea}
-              width={Dimensions.get("window").width * 0.8}
-              height={Dimensions.get("window").height * 0.4}
-              chartConfig={chart_graph}
-              bezier
-            />
+            {this.state.data_person_per_hour_on_beach.length !== 0 ? (
+              <LineChart
+                data={{
+                  labels: [
+                    "-8",
+                    "-7",
+                    "-6",
+                    "-5",
+                    "-4",
+                    "-3",
+                    "-2",
+                    "-1",
+                    "mtn",
+                  ],
+                  datasets: [
+                    {
+                      data: this.state.visibility_sea,
+                      strokeWidth: 2,
+                    },
+                  ],
+                  legend: ["en %"],
+                }}
+                width={Dimensions.get("window").width * 0.8}
+                height={Dimensions.get("window").height * 0.4}
+                chartConfig={chart_graph}
+                bezier
+              />
+            ) : (
+              ""
+            )}
           </View>
 
           {/*MAP ACCESS*/}

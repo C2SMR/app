@@ -30,7 +30,7 @@ export class Alert extends React.Component {
         x: Dimensions.get("window").width * 0.05,
         y: -1000,
       }),
-      lst_alert: [],
+      lst_alert: [[]],
     };
     this.fetch_alert();
   }
@@ -113,8 +113,8 @@ export class Alert extends React.Component {
             <Pressable
               onPress={() => {
                 this.setState({ num_image_to_display: i });
-                this.moveForPopUp(false);
-                this.refs._scrollView.scrollTo(0);
+                // this.moveForPopUp(false);
+                // this.refs._scrollView.scrollTo(0);
               }}
               style={[
                 settings_styles.flex_container_center,

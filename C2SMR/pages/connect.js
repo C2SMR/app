@@ -22,7 +22,7 @@ export class Connect extends React.Component {
     setTimeout(() => {
       const new_filter_list_temp = [];
       this.state.cities.map((a) => {
-        if (a.split(this.state.param).length !== 1) {
+        if (a[0].split(this.state.param).length !== 1) {
           new_filter_list_temp.push(a);
         }
       });

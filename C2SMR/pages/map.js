@@ -19,7 +19,6 @@ export class Map extends React.Component {
         longitudeDelta: 0.0421,
       },
       pointer_position: [
-        [48.994119156081254, 2.2246659661397366, "Franconville", 20],
       ],
     };
     this.get_data();
