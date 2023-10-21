@@ -136,9 +136,10 @@ export const container_styles = StyleSheet.create({
   choice_city: {
     backgroundColor: color_blue_dark,
     borderRadius: 20,
+    textAlign: "center",
     width: Dimensions.get("window").width * 0.8,
     marginLeft: Dimensions.get("window").width * 0.1,
-    height: 50,
+    height: 70,
     elevation: 5,
     marginTop: 20,
   },

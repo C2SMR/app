@@ -137,7 +137,7 @@ export class Home extends React.Component {
               {this.state.number_red_alert !== "" ? (
                 <Alert_circle
                   color={color_red}
-                  number={this.state.number_red_alert}
+                  number={this.state.number_green_alert}
                 />
               ) : (
                 ""
@@ -153,7 +153,7 @@ export class Home extends React.Component {
               {this.state.number_red_alert !== "" ? (
                 <Alert_circle
                   color={color_green}
-                  number={this.state.number_green_alert}
+                  number={this.state.number_red_alert}
                 />
               ) : (
                 ""
