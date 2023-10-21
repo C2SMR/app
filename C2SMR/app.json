@@ -4,7 +4,6 @@
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification-icon.png",
           "iosDisplayInForeground": true,
           "androidMode": "default"
         }
@@ -31,7 +30,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "package": "com.anonymous.C2SMR"
     },
     "web": {
       "favicon": "./assets/favicon.png"
