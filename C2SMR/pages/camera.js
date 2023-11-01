@@ -1,12 +1,10 @@
 import React from "react";
-import { Pressable, View, Image } from "react-native";
+import { View, Image,Text } from "react-native";
 import { Nav_bar } from "../components/nav_bar";
-import { color_black } from "../styles/colors";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { settings_styles } from "../styles/settings";
-import { container_styles } from "../styles/container";
 import { images_styles } from "../styles/image";
 import { url_api } from "../modules/env";
+import {settings_styles} from "../styles/settings";
+import {container_styles} from "../styles/container";
 
 export class Camera extends React.Component {
   constructor({ props, set_name, city }) {
@@ -46,10 +44,14 @@ export class Camera extends React.Component {
             }}
           ></Image>
         ) : (
-          ""
+            <View style={[settings_styles.flex_container,container_styles.choice_city,{marginTop: "80%"}]}>
+                <Text>Plage non surveillée (Aucune caméra installée)</Text>
+            </View>
+
         )}
 
-        {/*RELOAD STEP*/}
+        {
+            /*RELOAD STEP
         <Pressable
           onPress={() => {
             this.get_path_picture();
@@ -61,6 +63,9 @@ export class Camera extends React.Component {
         >
           <Ionicons name="reload-outline" size={30} color={color_black} />
         </Pressable>
+        */
+        }
+
 
         <Nav_bar number_page={2} set_name={this.state.set_page_name} />
       </View>
