@@ -2,8 +2,6 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import { View } from "react-native";
 import { Home } from "./pages/home";
-import { Camera } from "./pages/camera";
-import { Map } from "./pages/map";
 import { Settings } from "./pages/settings";
 import { Alert } from "./pages/alert";
 import { getData } from "./modules/data";
@@ -49,16 +47,6 @@ export default class App extends React.Component {
         )}
         {this.state.page_name === "alert" ? (
           <Alert set_name={this.setData} city={this.state.city} />
-        ) : (
-          ""
-        )}
-        {this.state.page_name === "camera" ? (
-          <Camera set_name={this.setData} city={this.state.city} />
-        ) : (
-          ""
-        )}
-        {this.state.page_name === "map" ? (
-          <Map set_name={this.setData} city={this.state.city} />
         ) : (
           ""
         )}

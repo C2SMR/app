@@ -12,7 +12,7 @@ export class Nav_bar extends React.Component {
       set_name: set_name,
     };
     this.number_page = number_page;
-    this.lst_home_icon = ["home", "alert", "camera", "map", "settings"];
+    this.lst_home_icon = ["home", "alert", "settings"];
   }
 
   render() {
@@ -28,7 +28,7 @@ export class Nav_bar extends React.Component {
             <Ionicons
               key={"icon-" + i.toString()}
               name={a}
-              size={20}
+              size={25}
               color={i === this.number_page ? color_blue_dark : color_white}
             />
           </Pressable>

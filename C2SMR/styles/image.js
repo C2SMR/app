@@ -18,7 +18,9 @@ export const images_styles = StyleSheet.create({
   },
 
   actual_picture: {
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height * 1.1,
+    width: "90%",
+    height: "60%",
+    borderRadius: 20,
+    elevation: 10,
   },
 });

@@ -85,7 +85,7 @@ export class Settings extends React.Component {
             <View style={settings_styles.void_container_for_scroll_view}></View>
           </ScrollView>
         </View>
-        <Nav_bar number_page={4} set_name={this.state.set_page_name} />
+        <Nav_bar number_page={2} set_name={this.state.set_page_name} />
       </View>
     );
   }
