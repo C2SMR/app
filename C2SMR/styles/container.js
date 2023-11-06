@@ -45,13 +45,9 @@ export const container_styles = StyleSheet.create({
 
   graph: {
     borderRadius: 20,
-    elevation: 10,
-    backgroundColor: color_white,
-    width: Dimensions.get("window").width * 0.9,
-    marginLeft: Dimensions.get("window").width * 0.05,
-    height: 400,
-    marginTop: 75,
-    marginBottom: 30,
+    width: Dimensions.get("window").width ,
+    height: 300,
+    marginTop: 20,
   },
 
   btn: {

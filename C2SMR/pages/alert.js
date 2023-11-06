@@ -18,7 +18,7 @@ import { Label } from "../components/label";
 import { images_styles } from "../styles/image";
 import * as Linking from "expo-linking";
 import { url_api } from "../modules/env";
-import {sentences} from "../modules/language";
+import { sentences } from "../modules/language";
 
 export class Alert extends React.Component {
   constructor({ props, set_name, city }) {
