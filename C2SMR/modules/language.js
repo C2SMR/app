@@ -4,6 +4,7 @@ export const sentences = {
         label_population : "Population détéctés : ",
         beach : "Plage",
         sea: "Mer",
+        label_picture: "État actuel de la plage : ",
         label_population_time : "Population détéctés dans le temps : ",
         label_report_step : "Rapports métérologique : ",
         label_sea_visibility : "Visibilité de la mer : ",
@@ -12,5 +13,9 @@ export const sentences = {
         un_login: "Déconnection",
         contact : "Contact",
         where_are_you : "Où êtes vous ?",
+        temperature: "température",
+        cloud_cover: "taux de nuages",
+        wind: "vent",
+        visibility: "visibilité"
     }
 }

@@ -4,7 +4,7 @@ import { text_styles } from "../styles/text";
 import { settings_styles } from "../styles/settings";
 import { url_api } from "../modules/env";
 import { container_styles } from "../styles/container";
-import {sentences} from "../modules/language";
+import { sentences } from "../modules/language";
 
 export class Connect extends React.Component {
   constructor({ props, set_name, set_city }) {
@@ -23,7 +23,9 @@ export class Connect extends React.Component {
     setTimeout(() => {
       const new_filter_list_temp = [];
       this.state.cities.map((a) => {
-        if (a[0].toUpperCase().split(this.state.param.toUpperCase()).length !== 1) {
+        if (
+          a[0].toUpperCase().split(this.state.param.toUpperCase()).length !== 1
+        ) {
           new_filter_list_temp.push(a);
         }
       });
@@ -56,7 +58,7 @@ export class Connect extends React.Component {
               ]}
             >
               <Text style={[settings_styles.basic_font, text_styles.title]}>
-                  {sentences.fr.where_are_you}
+                {sentences.fr.where_are_you}
               </Text>
             </View>
             <View style={[container_styles.input]}>
@@ -80,7 +82,11 @@ export class Connect extends React.Component {
                   container_styles.choice_city,
                 ]}
               >
-                <Text style={[settings_styles.basic_font]}>{a}</Text>
+                <Text
+                  style={[settings_styles.basic_font, { textAlign: "center" }]}
+                >
+                  {a}
+                </Text>
               </Pressable>
             ))}
             <View style={settings_styles.void_container_for_scroll_view}></View>

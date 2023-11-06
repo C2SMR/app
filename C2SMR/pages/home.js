@@ -1,17 +1,21 @@
 import React from "react";
-import {View, Text, ScrollView, Dimensions, Pressable} from "react-native";
-import { chart_graph, settings_styles } from "../styles/settings";
+import { View, Text, ScrollView, Pressable, Image } from "react-native";
+import { settings_styles } from "../styles/settings";
 import { Alert_circle } from "../components/alert_circle";
-import { color_green, color_orange, color_red } from "../styles/colors";
+import {
+  color_green,
+  color_orange,
+  color_red,
+  color_white,
+} from "../styles/colors";
 import { container_styles } from "../styles/container";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { Nav_bar } from "../components/nav_bar";
 import { text_styles } from "../styles/text";
 import { Label } from "../components/label";
-import { LineChart } from "react-native-chart-kit";
-import { Icon_text_button } from "../components/icon_text_button";
 import { url_api } from "../modules/env";
-import {sentences} from "../modules/language";
+import { sentences } from "../modules/language";
+import { images_styles } from "../styles/image";
 
 export class Home extends React.Component {
   constructor({ props, set_name, city }) {
@@ -33,10 +37,27 @@ export class Home extends React.Component {
       weather_swell: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       weather_wind: [0, 0, 0, 0, 0, 0, 0, 0, 0],
       weather_visibility: [0, 0, 0, 0, 0, 0, 0, 0, 0],
+      image_base_64: "",
     };
 
     this.fetch_speed_data();
     this.fetch_data_graph();
+    this.get_path_picture();
+  }
+
+  get_path_picture() {
+    fetch(url_api + "/get_picture", {
+      method: "POST",
+      body: JSON.stringify({
+        city: this.city + ".png",
+      }),
+    })
+      .then((r) => r.json())
+      .then((r) => {
+        this.setState({
+          path_picture: r["picture"],
+        });
+      });
   }
 
   fetch_speed_data() {
@@ -126,9 +147,9 @@ export class Home extends React.Component {
               <Ionicons name="flag" size={40} color={this.state.color_flag} />
             </View>
             <Pressable
-                onPress={()=> {
-                    this.state.set_page_name("alert");
-                }}
+              onPress={() => {
+                this.state.set_page_name("alert");
+              }}
               style={[
                 settings_styles.flex_container,
                 container_styles.container_circle_alert,
@@ -173,7 +194,9 @@ export class Home extends React.Component {
               <Text style={settings_styles.basic_font}>
                 {this.state.number_person_detected_on_beach}
               </Text>
-              <Text style={text_styles.index_font_home_page}>{sentences.fr.beach}</Text>
+              <Text style={text_styles.index_font_home_page}>
+                {sentences.fr.beach}
+              </Text>
             </View>
             <View
               style={[
@@ -184,246 +207,102 @@ export class Home extends React.Component {
               <Text style={settings_styles.basic_font}>
                 {this.state.number_person_detection_on_sea}
               </Text>
-              <Text style={text_styles.index_font_home_page}>{sentences.fr.sea}</Text>
+              <Text style={text_styles.index_font_home_page}>
+                {sentences.fr.sea}
+              </Text>
             </View>
           </View>
 
           {/*POPULATION NUMBER BY TIME STEP*/}
-          <Label text={sentences.fr.label_population_time} />
+          <Label text={sentences.fr.label_picture} />
           <View
             style={[settings_styles.flex_container, container_styles.graph]}
           >
-            {this.state.data_person_per_hour_on_beach.length !== 0 ? (
-              <LineChart
-                data={{
-                  labels: [
-                    "-8",
-                    "-7",
-                    "-6",
-                    "-5",
-                    "-4",
-                    "-3",
-                    "-2",
-                    "-1",
-                    "mtn",
-                  ],
-                  datasets: [
-                    {
-                      data: this.state.data_person_per_hour_on_sea,
-                      strokeWidth: 2,
-                    },
-                    {
-                      data: this.state.data_person_per_hour_on_beach,
-                      color: (opacity = 1) => `rgba(255, 231, 160, ${opacity})`,
-                      strokeWidth: 2,
-                    },
-                  ],
-                  legend: [sentences.fr.sea, sentences.fr.beach],
-                }}
-                width={Dimensions.get("window").width * 0.8}
-                height={Dimensions.get("window").height * 0.4}
-                chartConfig={chart_graph}
-                bezier
-              />
+            {this.state.image_base_64 === "" ? (
+              <View
+                style={[
+                  settings_styles.flex_container,
+                  container_styles.choice_city,
+                  { marginLeft: 0, backgroundColor: color_white },
+                ]}
+              >
+                <Text
+                  style={[
+                    settings_styles.basic_font,
+                    { fontSize: 16, textAlign: "center" },
+                  ]}
+                >
+                  Plage non surveillée (Aucune caméra installée)
+                </Text>
+              </View>
             ) : (
-              ""
+              <Image
+                style={images_styles.actual_picture}
+                source={{
+                  uri: "data:image/png;base64," + this.state.image_base_64,
+                }}
+              ></Image>
             )}
           </View>
 
-          {/*WEATHER REPORT STEP*/}
+          {/* WEATHER STEP*/}
           <Label text={sentences.fr.label_report_step} />
-          <ScrollView horizontal={true}>
+          <View style={settings_styles.flex_container}>
             <View
-              style={[settings_styles.flex_container, container_styles.graph]}
+              style={[
+                settings_styles.flex_container_column,
+                container_styles.container_flag,
+              ]}
             >
-              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
-                <LineChart
-                  data={{
-                    labels: [
-                      "-8",
-                      "-7",
-                      "-6",
-                      "-5",
-                      "-4",
-                      "-3",
-                      "-2",
-                      "-1",
-                      "mtn",
-                    ],
-                    datasets: [
-                      {
-                        data: this.state.weather_temperature_sea,
-                        strokeWidth: 2,
-                      },
-                      {
-                        data: this.state.weather_temperature_beach,
-                        color: (opacity = 1) =>
-                          `rgba(255, 231, 160, ${opacity})`,
-                        strokeWidth: 2,
-                      },
-                    ],
-                    legend: ["°C eau", " °C air"],
-                  }}
-                  width={Dimensions.get("window").width * 0.8}
-                  height={Dimensions.get("window").height * 0.4}
-                  chartConfig={chart_graph}
-                  bezier
-                />
-              ) : (
-                ""
-              )}
+              <Text style={settings_styles.basic_font}>
+                {this.state.weather_temperature_beach[0]}
+              </Text>
+              <Text style={text_styles.index_font_home_page}>
+                {sentences.fr.temperature}
+              </Text>
             </View>
             <View
-              style={[settings_styles.flex_container, container_styles.graph]}
+              style={[
+                settings_styles.flex_container_column,
+                container_styles.container_flag,
+              ]}
             >
-              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
-                <LineChart
-                  data={{
-                    labels: [
-                      "-8",
-                      "-7",
-                      "-6",
-                      "-5",
-                      "-4",
-                      "-3",
-                      "-2",
-                      "-1",
-                      "mtn",
-                    ],
-                    datasets: [
-                      {
-                        data: this.state.weather_swell,
-                        strokeWidth: 2,
-                      },
-                    ],
-                    legend: ["Nuages en %"],
-                  }}
-                  width={Dimensions.get("window").width * 0.8}
-                  height={Dimensions.get("window").height * 0.4}
-                  chartConfig={chart_graph}
-                  bezier
-                />
-              ) : (
-                ""
-              )}
+              <Text style={settings_styles.basic_font}>
+                {this.state.weather_swell[0]}
+              </Text>
+              <Text style={text_styles.index_font_home_page}>
+                {sentences.fr.cloud_cover}
+              </Text>
             </View>
-            <View
-              style={[settings_styles.flex_container, container_styles.graph]}
-            >
-              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
-                <LineChart
-                  data={{
-                    labels: [
-                      "-8",
-                      "-7",
-                      "-6",
-                      "-5",
-                      "-4",
-                      "-3",
-                      "-2",
-                      "-1",
-                      "mtn",
-                    ],
-                    datasets: [
-                      {
-                        data: this.state.weather_wind,
-                        strokeWidth: 2,
-                      },
-                    ],
-                    legend: ["Vent (en nœuds)"],
-                  }}
-                  width={Dimensions.get("window").width * 0.8}
-                  height={Dimensions.get("window").height * 0.4}
-                  chartConfig={chart_graph}
-                  bezier
-                />
-              ) : (
-                ""
-              )}
-            </View>
-            <View
-              style={[settings_styles.flex_container, container_styles.graph]}
-            >
-              {this.state.data_person_per_hour_on_beach.length !== 0 ? (
-                <LineChart
-                  data={{
-                    labels: [
-                      "-8",
-                      "-7",
-                      "-6",
-                      "-5",
-                      "-4",
-                      "-3",
-                      "-2",
-                      "-1",
-                      "mtn",
-                    ],
-                    datasets: [
-                      {
-                        data: this.state.weather_visibility,
-                        strokeWidth: 2,
-                      },
-                    ],
-                    legend: ["Visibilité (en mille)"],
-                  }}
-                  width={Dimensions.get("window").width * 0.8}
-                  height={Dimensions.get("window").height * 0.4}
-                  chartConfig={chart_graph}
-                  bezier
-                />
-              ) : (
-                ""
-              )}
-            </View>
-            <View style={{ width: 50 }}></View>
-          </ScrollView>
-
-          {/*VISION STEP*/}
-          <Label text={sentences.fr.label_sea_visibility} />
-          <View
-            style={[settings_styles.flex_container, container_styles.graph]}
-          >
-            {this.state.data_person_per_hour_on_beach.length !== 0 ? (
-              <LineChart
-                data={{
-                  labels: [
-                    "-8",
-                    "-7",
-                    "-6",
-                    "-5",
-                    "-4",
-                    "-3",
-                    "-2",
-                    "-1",
-                    "mtn",
-                  ],
-                  datasets: [
-                    {
-                      data: this.state.visibility_sea,
-                      strokeWidth: 2,
-                    },
-                  ],
-                  legend: ["en %"],
-                }}
-                width={Dimensions.get("window").width * 0.8}
-                height={Dimensions.get("window").height * 0.4}
-                chartConfig={chart_graph}
-                bezier
-              />
-            ) : (
-              ""
-            )}
           </View>
-
-          {/*MAP ACCESS*/}
-          <Icon_text_button
-            text={sentences.fr.go_to_map}
-            icon={"map"}
-            color={color_green}
-            action={() => {
-              this.state.set_page_name("map");
-            }}
-          />
+          <View style={settings_styles.flex_container}>
+            <View
+              style={[
+                settings_styles.flex_container_column,
+                container_styles.container_flag,
+              ]}
+            >
+              <Text style={settings_styles.basic_font}>
+                {this.state.weather_wind[0]}
+              </Text>
+              <Text style={text_styles.index_font_home_page}>
+                {sentences.fr.wind}
+              </Text>
+            </View>
+            <View
+              style={[
+                settings_styles.flex_container_column,
+                container_styles.container_flag,
+              ]}
+            >
+              <Text style={settings_styles.basic_font}>
+                {this.state.weather_visibility[0]}
+              </Text>
+              <Text style={text_styles.index_font_home_page}>
+                {sentences.fr.visibility}
+              </Text>
+            </View>
+          </View>
 
           <View style={settings_styles.void_container_for_scroll_view}></View>
         </ScrollView>

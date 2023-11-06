@@ -24,7 +24,10 @@ export class Configuration extends React.Component {
           value={this.state.isChecked}
           color={color_blue_dark}
           onValueChange={async () => {
-            await storeData(this.level_notif, JSON.stringify(!this.state.isChecked));
+            await storeData(
+              this.level_notif,
+              JSON.stringify(!this.state.isChecked)
+            );
             this.setState({ isChecked: !this.state.isChecked });
           }}
         />
