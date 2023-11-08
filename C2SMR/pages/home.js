@@ -55,7 +55,7 @@ export class Home extends React.Component {
       .then((r) => r.json())
       .then((r) => {
         this.setState({
-          path_picture: r["picture"],
+            image_base_64: r["picture"],
         });
       });
   }
