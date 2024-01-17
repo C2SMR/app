@@ -55,7 +55,6 @@ export default class App extends React.Component {
         ) : (
           ""
         )}
-        <StatusBar style="auto" />
       </View>
     );
   }
