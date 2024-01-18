@@ -3,7 +3,7 @@
     "name": "C2SMR",
     "slug": "C2SMR",
     "version": "4.0.0",
-    "orientation": "portrait",
+    "orientation": "ALL",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {

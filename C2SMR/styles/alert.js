@@ -3,8 +3,8 @@ import { color_white } from "./colors";
 
 export const round_alert_styles = StyleSheet.create({
   background: {
-    width: Dimensions.get("window").width * 0.1,
-    height: Dimensions.get("window").width * 0.1,
+    width: Dimensions.get("window").width * 0.05,
+    height: Dimensions.get("window").width * 0.05,
     borderRadius: Dimensions.get("window").width * 0.1,
   },
 
