@@ -20,7 +20,8 @@
     "react-native-reanimated": "~3.3.0",
     "react-native-web": "^0.19.8",
     "sass": "^1.66.1",
-    "expo-splash-screen": "~0.20.5"
+    "expo-splash-screen": "~0.20.5",
+    "expo-screen-orientation": "~6.0.6"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
