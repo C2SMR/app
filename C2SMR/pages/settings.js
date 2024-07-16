@@ -10,14 +10,19 @@ import {text_styles} from "../styles/text";
 import {sentences} from "../modules/language";
 
 export class Settings extends React.Component {
-    constructor({props, set_name, city}) {
-        super(props);
-        this.city = city;
-        this.state = {
-            set_page_name: set_name,
-            name_of_the_city: this.city,
-        };
+    constructor({ props, set_name, city }) {
+      super(props);
+      this.city = city;
+      this.state = {
+        set_page_name: set_name,
+        name_of_the_city: this.city,
+      };
     }
+
+    handleLogout = async () => {
+        await clearCity();
+        this.state.set_page_name("connect");
+      };
 
     render() {
         return (
@@ -73,11 +78,7 @@ export class Settings extends React.Component {
                             text={sentences.fr.un_login}
                             icon={"log-in-outline"}
                             color={color_red}
-                            action={() => {
-                                removeData("email-c2smr-").then(
-                                    this.state.set_page_name("connect")
-                                );
-                            }}
+                            action={this.handleLogout}
                         />
 
                         <View style={settings_styles.void_container_for_scroll_view}></View>
