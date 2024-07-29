@@ -3,25 +3,27 @@ import {
     View,
     Text,
     ScrollView,
-    Image,
     Pressable,
     Animated,
     Dimensions,
 } from "react-native";
-import {Nav_bar} from "../components/nav_bar";
-import {settings_styles} from "../styles/settings";
-import {container_styles} from "../styles/container";
-import {text_styles} from "../styles/text";
-import {color_green, color_orange, color_red} from "../styles/colors";
+import { Nav_bar } from "../components/nav_bar";
+import { settings_styles } from "../styles/settings";
+import { container_styles } from "../styles/container";
+import { text_styles } from "../styles/text";
+import { color_green, color_orange, color_red } from "../styles/colors";
 import Ionicons from "@expo/vector-icons/Ionicons";
-import {Label} from "../components/label";
-import {images_styles} from "../styles/image";
+import { Label } from "../components/label";
 import * as Linking from "expo-linking";
-import {url_api} from "../modules/env";
-import {sentences} from "../modules/language";
+import { url_api } from "../modules/env";
+import { sentences } from "../modules/language";
+import * as Notifications from 'expo-notifications';
+import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { sendPushNotification } from '../modules/notification';
 
 export class Alert extends React.Component {
-    constructor({props, set_name, city}) {
+    constructor({ props, set_name, city }) {
         super(props);
         this.city = city;
         this.state = {
@@ -33,12 +35,43 @@ export class Alert extends React.Component {
             }),
             lst_alert: [[]],
         };
+        this.registerForPushNotificationsAsync();
         setInterval(() => {
             this.fetch_alert();
         }, 1000);
     }
 
-    fetch_alert() {
+    async registerForPushNotificationsAsync() {
+        let token;
+        if (Constants.isDevice) {
+            const { status: existingStatus } = await Notifications.getPermissionsAsync();
+            let finalStatus = existingStatus;
+            if (existingStatus !== 'granted') {
+                const { status } = await Notifications.requestPermissionsAsync();
+                finalStatus = status;
+            }
+            if (finalStatus !== 'granted') {
+                alert('Failed to get push token for push notification!');
+                return;
+            }
+            token = (await Notifications.getExpoPushTokenAsync()).data;
+            await AsyncStorage.setItem('pushToken', token);
+        } else {
+            alert('Must use physical device for Push Notifications');
+        }
+
+        if (Platform.OS === 'android') {
+            Notifications.setNotificationChannelAsync('default', {
+                name: 'default',
+                importance: Notifications.AndroidImportance.MAX,
+                vibrationPattern: [0, 250, 250, 250],
+                lightColor: '#FF231F7C',
+            });
+        }
+    }
+
+    async fetch_alert() {
+        const token = await AsyncStorage.getItem('pushToken');
         fetch(url_api + "/get_data_alert", {
             method: "POST",
             body: JSON.stringify({
@@ -47,6 +80,12 @@ export class Alert extends React.Component {
         })
             .then((r) => r.json())
             .then((r) => {
+                const new_alerts = r["data"].filter(alert => 
+                    !this.state.lst_alert.some(existingAlert => 
+                        existingAlert[0] === alert[0] && existingAlert[1] === alert[1]));
+                if (new_alerts.length > 0 && token) {
+                    sendPushNotification(token, new_alerts[0][1]);
+                }
                 this.setState({
                     lst_alert: r["data"],
                 });
@@ -61,7 +100,7 @@ export class Alert extends React.Component {
             new_y = Dimensions.get("window").height * 0.27;
         }
         Animated.timing(this.state.value_of_pop_up, {
-            toValue: {x: Dimensions.get("window").width * 0.05, y: new_y},
+            toValue: { x: Dimensions.get("window").width * 0.05, y: new_y },
             duration: 500,
             useNativeDriver: false,
         }).start();
@@ -81,7 +120,7 @@ export class Alert extends React.Component {
                             container_styles.round_btn,
                         ]}
                     >
-                        <Ionicons name="call-outline" size={30} color={color_red}/>
+                        <Ionicons name="call-outline" size={30} color={color_red} />
                     </Pressable>
 
                     {/*POP UP IMAGE STEP*/}
@@ -91,32 +130,18 @@ export class Alert extends React.Component {
                             this.state.value_of_pop_up.getLayout(),
                         ]}
                     >
-                        <Image
-                            style={[images_styles.alert_image]}
-                            source={{
-                                uri: this.state.lst_alert[this.state.num_image_to_display][2],
-                            }}
-                        ></Image>
-                        <Pressable
-                            onPress={() => this.moveForPopUp(true)}
-                            style={{
-                                position: "absolute",
-                                top: 20,
-                                zIndex: 4,
-                                left: Dimensions.get("window").width * 0.75,
-                            }}
-                        >
-                            <Ionicons name={"close"} color={color_red} size={35}/>
-                        </Pressable>
+                        <Text style={[text_styles.pop_up_text]}>
+                            {this.state.lst_alert[this.state.num_image_to_display][1]}
+                        </Text>
                     </Animated.View>
 
                     {/*ALERT LIST STEP*/}
-                    <Label text={sentences.fr.alert_title}/>
+                    <Label text={sentences.fr.alert_title} />
                     {this.state.lst_alert.map((a, i) => (
                         <Pressable
                             onPress={() => {
-                                this.setState({num_image_to_display: i});
-                                // this.moveForPopUp(false);
+                                this.setState({ num_image_to_display: i });
+                                this.moveForPopUp(false);
                                 // this.refs._scrollView.scrollTo(0);
                             }}
                             style={[
@@ -125,7 +150,7 @@ export class Alert extends React.Component {
                             ]}
                             key={"card-alert-" + i.toString()}
                         >
-                            <View style={[settings_styles.flex_container, {flex: 1}]}>
+                            <View style={[settings_styles.flex_container, { flex: 1 }]}>
                                 <Ionicons
                                     name="triangle-outline"
                                     size={50}
@@ -138,7 +163,7 @@ export class Alert extends React.Component {
                                     }
                                 />
                             </View>
-                            <View style={[settings_styles.flex_container, {flex: 3}]}>
+                            <View style={[settings_styles.flex_container, { flex: 3 }]}>
                                 <Text
                                     style={[settings_styles.basic_font, text_styles.btn_text]}
                                 >
@@ -150,7 +175,7 @@ export class Alert extends React.Component {
 
                     <View style={settings_styles.void_container_for_scroll_view}></View>
                 </ScrollView>
-                <Nav_bar number_page={1} set_name={this.state.set_page_name}/>
+                <Nav_bar number_page={1} set_name={this.state.set_page_name} />
             </View>
         );
     }
